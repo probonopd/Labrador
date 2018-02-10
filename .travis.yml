@@ -16,15 +16,15 @@ script:
   - qmake CONFIG+=release PREFIX=/usr
   - make -j$(nproc)
 # - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
-#   NOTE: The following 4 lines should not be needed if "make install" would be made work for Labrador; see
+#   NOTE: The following 3 lines should not be needed if "make install" would be made work for Labrador; see
 #   https://github.com/probonopd/linuxdeployqt#using-linuxdeployqt-with-travis-ci
-  - sudo cp ./build_linux/libdfuprog/lib/x64/* /usr/local/lib # FIXME
   - mkdir -p appdir/usr/bin/ ; strip bin/Labrador ; cp bin/Labrador appdir/usr/bin/
   - mkdir -p appdir/usr/share/applications ; cp build_linux/labrador.desktop appdir/usr/share/applications
   - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; cp '../build_scripts/linux deploy labra 64-bit/labradeb/usr/share/app-install/icons/espotek-labrador.png' appdir/usr/share/icons/hicolor/256x256/apps/
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - export LD_LIBRARY_PATH=./build_linux/libdfuprog/lib/x64/ # FIXME
   - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
