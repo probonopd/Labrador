@@ -15,8 +15,6 @@ script:
   - cd Desktop_Interface
   - qmake CONFIG+=release PREFIX=/usr
   - make -j$(nproc)
-  - sudo find . -name 'libdfuprog-*.so' -exec cp {} /usr/local/lib/ \;
-  - find . -name 'libdfuprog-0.9.so'
 # - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
 #   NOTE: The following 3 lines should not be needed if "make install" would be made work for Labrador; see
 #   https://github.com/probonopd/linuxdeployqt#using-linuxdeployqt-with-travis-ci
@@ -26,6 +24,7 @@ script:
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
   - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - export LD_LIBRARY_PATH=./build_linux/libdfuprog/lib/x64/ # FIXME
   - export VERSION=$(git rev-parse --short HEAD) # linuxdeployqt uses this for naming the file
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/*.desktop -appimage
