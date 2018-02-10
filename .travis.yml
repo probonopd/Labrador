@@ -16,6 +16,7 @@ script:
   - qmake CONFIG+=release PREFIX=/usr
   - make -j$(nproc)
   - sudo find . -name 'libdfuprog-*.so' -exec cp {} /usr/local/lib/ \;
+  - find . -name 'libdfuprog-0.9.so'
 # - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
 #   NOTE: The following 3 lines should not be needed if "make install" would be made work for Labrador; see
 #   https://github.com/probonopd/linuxdeployqt#using-linuxdeployqt-with-travis-ci
