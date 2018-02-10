@@ -16,8 +16,9 @@ script:
   - qmake CONFIG+=release PREFIX=/usr
   - make -j$(nproc)
 # - make INSTALL_ROOT=appdir -j$(nproc) install ; find appdir/
-#   NOTE: The following 3 lines should not be needed if "make install" would be made work for Labrador; see
+#   NOTE: The following 4 lines should not be needed if "make install" would be made work for Labrador; see
 #   https://github.com/probonopd/linuxdeployqt#using-linuxdeployqt-with-travis-ci
+  - sudo mkdir -p /usr/lib/./build_linux/libdfuprog/lib/ ; sudo ln -s $(readlink -f ./build_linux/libdfuprog/lib/*) /usr/lib/./build_linux/libdfuprog/lib/ # FIXME
   - mkdir -p appdir/usr/bin/ ; strip bin/Labrador ; cp bin/Labrador appdir/usr/bin/
   - mkdir -p appdir/usr/share/applications ; cp build_linux/labrador.desktop appdir/usr/share/applications
   - mkdir -p appdir/usr/share/icons/hicolor/256x256/apps/ ; cp '../build_scripts/linux deploy labra 64-bit/labradeb/usr/share/app-install/icons/espotek-labrador.png' appdir/usr/share/icons/hicolor/256x256/apps/
